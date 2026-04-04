@@ -1,5 +1,8 @@
 import { Smartphone, Tablet, Monitor } from "lucide-react";
-import type { ComponentType } from "react";
+import type { LucideProps } from "lucide-react";
+import type { ForwardRefExoticComponent, RefAttributes } from "react";
+
+type LucideIcon = ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
 
 export interface GridLayout {
   alias: string;
