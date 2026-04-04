@@ -80,6 +80,12 @@ const LayoutGrid = () => {
                   selectedAlias={activeLayout.alias}
                   onSelect={handleSelect}
                 />
+                <GridStyleControls
+                  color={columnColor}
+                  opacity={columnOpacity}
+                  onColorChange={setColumnColor}
+                  onOpacityChange={setColumnOpacity}
+                />
               </div>
             </div>
           </div>
