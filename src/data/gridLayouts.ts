@@ -15,7 +15,7 @@ export interface GridLayout {
 
 export interface DeviceGroup {
   label: string;
-  icon: ComponentType<{ size?: number; className?: string }>;
+  icon: LucideIcon;
   maxWidth?: number;
   layouts: GridLayout[];
 }
