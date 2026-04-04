@@ -15,7 +15,7 @@ const GridConfigPanel = ({ selectedDevice, selectedAlias, onSelect }: GridConfig
       return (
         <div key={device} className="flex flex-col gap-1.5">
           <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-            <Icon size={13} />
+            <Icon size={13} className={device === "mobile" ? "scale-x-[0.94]" : ""} />
             {group.label}
           </span>
           <div className="flex flex-wrap gap-1">
