@@ -44,6 +44,7 @@ export default {
           foreground: "hsl(var(--selected-foreground))",
         },
         "grid-column": "hsl(var(--grid-column))",
+        "glass-border": "hsl(var(--glass-border))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
