@@ -7,21 +7,18 @@ import { gridLayouts } from "@/data/gridLayouts";
 import GridConfigPanel from "./GridConfigPanel";
 import GridOverlay from "./GridOverlay";
 
-function getInitialLayout(): GridLayout {
-  const w = window.innerWidth;
-  if (w >= 1024) {
-    return gridLayouts.desktop.find((l) => l.alias === "balanced")!;
-  } else if (w >= 768) {
-    return gridLayouts.tablet.find((l) => l.alias === "default")!;
-  }
-  return gridLayouts.mobile.find((l) => l.alias === "default")!;
-}
-
 function getInitialDevice(): string {
   const w = window.innerWidth;
-  if (w >= 1024) return "desktop";
-  if (w >= 768) return "tablet";
-  return "mobile";
+  if (w <= 768) return "mobile";
+  if (w <= 1024) return "tablet";
+  return "desktop";
+}
+
+function getInitialLayout(): GridLayout {
+  const device = getInitialDevice();
+  const group = gridLayouts[device];
+  const defaultAlias = device === "desktop" ? "balanced" : "default";
+  return group.layouts.find((l) => l.alias === defaultAlias) ?? group.layouts[0];
 }
 
 const LayoutGrid = () => {
@@ -30,8 +27,7 @@ const LayoutGrid = () => {
   const [selectedDevice, setSelectedDevice] = useState<string>(getInitialDevice);
 
   useEffect(() => {
-    const initial = getInitialLayout();
-    setActiveLayout(initial);
+    setActiveLayout(getInitialLayout());
     setSelectedDevice(getInitialDevice());
   }, []);
 
