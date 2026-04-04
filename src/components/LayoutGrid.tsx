@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import type { GridLayout } from "@/data/gridLayouts";
 import { gridLayouts } from "@/data/gridLayouts";
 import GridConfigPanel from "./GridConfigPanel";
+import GridStyleControls from "./GridStyleControls";
 import GridOverlay from "./GridOverlay";
 
 function getInitialDevice(): string {
