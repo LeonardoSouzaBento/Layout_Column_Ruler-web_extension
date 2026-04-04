@@ -7,20 +7,26 @@ interface GridButtonProps {
   onClick: () => void;
 }
 
-const GridButton = ({ label, selected, onClick }: GridButtonProps) => (
-  <Button
-    variant="ghost"
-    size="sm"
-    onClick={onClick}
-    className={cn(
-      "rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-all",
-      selected
-        ? "bg-selected text-selected-foreground shadow-sm ring-1 ring-selected/50 hover:bg-selected/90 hover:text-selected-foreground"
-        : "text-muted-foreground hover:bg-accent hover:brightness-150"
-    )}
-  >
-    {label}
-  </Button>
-);
+const GridButton = ({
+  label,
+  selected,
+  onClick,
+}: GridButtonProps) => {
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={onClick}
+      className={cn(
+        "rounded-full px-3 py-1.5 text-sm font-medium capitalize transition-all",
+        selected
+          ? "not-only-of-type:bg-selected text-selected-foreground shadow-sm hover:bg-selected/90 hover:text-selected-foreground"
+          : "text-muted-foreground hover:bg-accent",
+      )}
+    >
+      {label}
+    </Button>
+  );
+};
 
 export default GridButton;

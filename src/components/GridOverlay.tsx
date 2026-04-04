@@ -29,7 +29,7 @@ const GridOverlay = ({ layout, color, opacity }: GridOverlayProps) => {
       {Array.from({ length: columns }, (_, i) => (
         <div
           key={i}
-          className="h-full rounded-sm"
+          className="h-full"
           style={{ background: `hsl(${color} / ${opacity})` }}
         />
       ))}

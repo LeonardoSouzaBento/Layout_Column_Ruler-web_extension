@@ -1,4 +1,3 @@
-import { Separator } from "@/components/ui/separator";
 
 const COLORS = [
   { name: "blue", value: "220 70% 55%" },
@@ -19,11 +18,9 @@ interface GridStyleControlsProps {
 }
 
 const GridStyleControls = ({ color, opacity, onColorChange, onOpacityChange }: GridStyleControlsProps) => (
-  <div className="flex flex-col gap-2.5">
-    <Separator className="bg-glass-border" />
-
-    <div className="flex flex-col gap-2 px-3 pb-2">
-      <div className="flex flex-wrap gap-1.5">
+  <div className="flex flex-col gap-2.5 pt-2 pb-4">
+    <div className="flex flex-col gap-3 px-4">
+      <div className="flex flex-wrap justify-between py-2">
         {COLORS.map((c) => (
           <button
             key={c.name}
@@ -31,15 +28,15 @@ const GridStyleControls = ({ color, opacity, onColorChange, onOpacityChange }: G
             className="h-5 w-5 rounded-full ring-1 ring-muted-foreground/20 transition-transform hover:scale-110"
             style={{
               background: `hsl(${c.value})`,
-              outline: color === c.value ? "2px solid hsl(var(--selected))" : "none",
+              outline: color === c.value ? "2px solid var(--color-selected)" : "none",
               outlineOffset: "2px",
             }}
           />
         ))}
       </div>
 
-      <div className="flex items-center gap-2">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <div className="flex items-center gap-4">
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Opacidade
         </span>
         <input
