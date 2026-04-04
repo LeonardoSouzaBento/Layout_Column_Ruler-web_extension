@@ -39,6 +39,11 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        selected: {
+          DEFAULT: "hsl(var(--selected))",
+          foreground: "hsl(var(--selected-foreground))",
+        },
+        "grid-column": "hsl(var(--grid-column))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
