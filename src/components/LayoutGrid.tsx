@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import type { GridLayout } from "@/data/gridLayouts";
 import { gridLayouts } from "@/data/gridLayouts";
 import GridConfigPanel from "./GridConfigPanel";
+import GridStyleControls from "./GridStyleControls";
 import GridOverlay from "./GridOverlay";
 
 function getInitialDevice(): string {
@@ -21,10 +22,15 @@ function getInitialLayout(): GridLayout {
   return group.layouts.find((l) => l.alias === defaultAlias) ?? group.layouts[0];
 }
 
+const DEFAULT_COLOR = "220 70% 55%";
+const DEFAULT_OPACITY = 0.38;
+
 const LayoutGrid = () => {
   const [open, setOpen] = useState(false);
   const [activeLayout, setActiveLayout] = useState<GridLayout>(getInitialLayout);
   const [selectedDevice, setSelectedDevice] = useState<string>(getInitialDevice);
+  const [columnColor, setColumnColor] = useState(DEFAULT_COLOR);
+  const [columnOpacity, setColumnOpacity] = useState(DEFAULT_OPACITY);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -50,7 +56,7 @@ const LayoutGrid = () => {
 
   return (
     <>
-      <GridOverlay layout={activeLayout} />
+      <GridOverlay layout={activeLayout} color={columnColor} opacity={columnOpacity} />
 
       <div ref={containerRef} className="fixed bottom-4 right-4 z-50">
         <div
@@ -73,6 +79,12 @@ const LayoutGrid = () => {
                   selectedDevice={selectedDevice}
                   selectedAlias={activeLayout.alias}
                   onSelect={handleSelect}
+                />
+                <GridStyleControls
+                  color={columnColor}
+                  opacity={columnOpacity}
+                  onColorChange={setColumnColor}
+                  onOpacityChange={setColumnOpacity}
                 />
               </div>
             </div>

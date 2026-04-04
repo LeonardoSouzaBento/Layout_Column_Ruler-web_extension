@@ -2,9 +2,11 @@ import type { GridLayout } from "@/data/gridLayouts";
 
 interface GridOverlayProps {
   layout: GridLayout;
+  color: string;
+  opacity: number;
 }
 
-const GridOverlay = ({ layout }: GridOverlayProps) => {
+const GridOverlay = ({ layout, color, opacity }: GridOverlayProps) => {
   const { columns, gutter, margin, width, type } = layout;
 
   const containerStyle: React.CSSProperties =
@@ -27,7 +29,8 @@ const GridOverlay = ({ layout }: GridOverlayProps) => {
       {Array.from({ length: columns }, (_, i) => (
         <div
           key={i}
-          className="h-full rounded-sm bg-grid-column/10"
+          className="h-full rounded-sm"
+          style={{ background: `hsl(${color} / ${opacity})` }}
         />
       ))}
     </div>
