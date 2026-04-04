@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -25,11 +25,23 @@ const LayoutGrid = () => {
   const [open, setOpen] = useState(false);
   const [activeLayout, setActiveLayout] = useState<GridLayout>(getInitialLayout);
   const [selectedDevice, setSelectedDevice] = useState<string>(getInitialDevice);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setActiveLayout(getInitialLayout());
     setSelectedDevice(getInitialDevice());
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
 
   const handleSelect = (device: string, layout: GridLayout) => {
     setSelectedDevice(device);
@@ -40,7 +52,7 @@ const LayoutGrid = () => {
     <>
       <GridOverlay layout={activeLayout} />
 
-      <div className="fixed bottom-4 right-4 z-50">
+      <div ref={containerRef} className="fixed bottom-4 right-4 z-50">
         <div
           className="overflow-hidden rounded-xl shadow-sm ring-1 ring-glass-border"
           style={{
