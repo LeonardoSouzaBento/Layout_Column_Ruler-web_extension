@@ -52,7 +52,7 @@ const LayoutGrid = () => {
     <>
       <GridOverlay layout={activeLayout} />
 
-      <div className="fixed bottom-4 right-4 z-50">
+      <div ref={containerRef} className="fixed bottom-4 right-4 z-50">
         <div
           className="overflow-hidden rounded-xl shadow-sm ring-1 ring-glass-border"
           style={{
