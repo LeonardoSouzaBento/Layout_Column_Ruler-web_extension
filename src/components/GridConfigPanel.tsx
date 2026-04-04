@@ -3,11 +3,12 @@ import type { GridLayout } from "@/data/gridLayouts";
 import GridButton from "./GridButton";
 
 interface GridConfigPanelProps {
-  selections: Record<string, string>;
+  selectedDevice: string;
+  selectedAlias: string;
   onSelect: (device: string, layout: GridLayout) => void;
 }
 
-const GridConfigPanel = ({ selections, onSelect }: GridConfigPanelProps) => (
+const GridConfigPanel = ({ selectedDevice, selectedAlias, onSelect }: GridConfigPanelProps) => (
   <div className="flex flex-col gap-3 p-3">
     {Object.entries(gridLayouts).map(([device, layouts]) => (
       <div key={device} className="flex flex-col gap-1.5">
@@ -19,7 +20,7 @@ const GridConfigPanel = ({ selections, onSelect }: GridConfigPanelProps) => (
             <GridButton
               key={layout.alias}
               label={layout.alias}
-              selected={selections[device] === layout.alias}
+              selected={selectedDevice === device && selectedAlias === layout.alias}
               onClick={() => onSelect(device, layout)}
             />
           ))}

@@ -13,10 +13,10 @@ const GridButton = ({ label, selected, onClick }: GridButtonProps) => (
     size="sm"
     onClick={onClick}
     className={cn(
-      "rounded-md px-3 py-1.5 text-xs font-medium capitalize transition-all",
+      "rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-all",
       selected
-        ? "bg-selected text-selected-foreground shadow-sm hover:bg-selected/90 hover:text-selected-foreground"
-        : "text-muted-foreground hover:bg-accent"
+        ? "bg-selected text-selected-foreground shadow-sm ring-1 ring-selected/50 hover:bg-selected/90 hover:text-selected-foreground"
+        : "text-muted-foreground hover:bg-accent hover:brightness-150"
     )}
   >
     {label}

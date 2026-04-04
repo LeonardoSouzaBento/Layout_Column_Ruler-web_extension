@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -7,18 +7,36 @@ import { gridLayouts } from "@/data/gridLayouts";
 import GridConfigPanel from "./GridConfigPanel";
 import GridOverlay from "./GridOverlay";
 
+function getInitialLayout(): GridLayout {
+  const w = window.innerWidth;
+  if (w >= 1024) {
+    return gridLayouts.desktop.find((l) => l.alias === "balanced")!;
+  } else if (w >= 768) {
+    return gridLayouts.tablet.find((l) => l.alias === "default")!;
+  }
+  return gridLayouts.mobile.find((l) => l.alias === "default")!;
+}
+
+function getInitialDevice(): string {
+  const w = window.innerWidth;
+  if (w >= 1024) return "desktop";
+  if (w >= 768) return "tablet";
+  return "mobile";
+}
+
 const LayoutGrid = () => {
   const [open, setOpen] = useState(false);
-  const defaultLayout = gridLayouts.desktop[4]; // "airy"
-  const [activeLayout, setActiveLayout] = useState<GridLayout>(defaultLayout);
-  const [selections, setSelections] = useState<Record<string, string>>({
-    desktop: "airy",
-    tablet: "",
-    mobile: "",
-  });
+  const [activeLayout, setActiveLayout] = useState<GridLayout>(getInitialLayout);
+  const [selectedDevice, setSelectedDevice] = useState<string>(getInitialDevice);
+
+  useEffect(() => {
+    const initial = getInitialLayout();
+    setActiveLayout(initial);
+    setSelectedDevice(getInitialDevice());
+  }, []);
 
   const handleSelect = (device: string, layout: GridLayout) => {
-    setSelections((prev) => ({ ...prev, [device]: layout.alias }));
+    setSelectedDevice(device);
     setActiveLayout(layout);
   };
 
@@ -26,16 +44,32 @@ const LayoutGrid = () => {
     <>
       <GridOverlay layout={activeLayout} />
 
-      <div className="fixed left-1/2 top-4 z-50 -translate-x-1/2">
+      <div className="fixed bottom-4 right-4 z-50">
         <div
-          className="overflow-hidden rounded-xl border shadow-lg"
+          className="overflow-hidden rounded-xl shadow-sm ring-1 ring-glass-border"
           style={{
             background: "hsl(var(--glass-bg))",
-            borderColor: "hsl(var(--glass-border))",
             backdropFilter: `blur(var(--glass-blur))`,
             WebkitBackdropFilter: `blur(var(--glass-blur))`,
           }}
         >
+          <div
+            className={cn(
+              "grid transition-all duration-200 ease-out",
+              open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+            )}
+          >
+            <div className="overflow-hidden">
+              <div className="border-b border-glass-border">
+                <GridConfigPanel
+                  selectedDevice={selectedDevice}
+                  selectedAlias={activeLayout.alias}
+                  onSelect={handleSelect}
+                />
+              </div>
+            </div>
+          </div>
+
           <Button
             variant="ghost"
             onClick={() => setOpen((v) => !v)}
@@ -50,19 +84,6 @@ const LayoutGrid = () => {
               )}
             />
           </Button>
-
-          <div
-            className={cn(
-              "grid transition-all duration-200 ease-out",
-              open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-            )}
-          >
-            <div className="overflow-hidden">
-              <div className="border-t" style={{ borderColor: "hsl(var(--glass-border))" }}>
-                <GridConfigPanel selections={selections} onSelect={handleSelect} />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </>
