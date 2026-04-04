@@ -25,11 +25,23 @@ const LayoutGrid = () => {
   const [open, setOpen] = useState(false);
   const [activeLayout, setActiveLayout] = useState<GridLayout>(getInitialLayout);
   const [selectedDevice, setSelectedDevice] = useState<string>(getInitialDevice);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setActiveLayout(getInitialLayout());
     setSelectedDevice(getInitialDevice());
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
 
   const handleSelect = (device: string, layout: GridLayout) => {
     setSelectedDevice(device);
