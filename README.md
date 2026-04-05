@@ -34,9 +34,13 @@
 ### Instalação da extensão no navegador
 
 1 - Abra o seu navegador (Brave, Chrome ou Edge).
+
 2 - Vá para a página de extensões digitando na barra de endereço: chrome://extensions
+
 3 - Ative o Modo do desenvolvedor (chave seletora no canto superior direito).
+
 4 - Clique no botão Carregar sem compactação (ou Load unpacked).
+
 5 - Na janela que abrir, navegue até a pasta do seu projeto, entre em .output e selecione a pasta chrome-mv3.
 
 ## License
