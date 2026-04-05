@@ -50,10 +50,10 @@ export const ConfigPanel = ({
         const Icon = group.icon;
         const iconClasses =
           device === "mobile"
-            ? "scale-x-[0.94] size-[12px]"
+            ? "scale-x-[0.94] size-[13px]"
             : device === "desktop"
-              ? "size-[13px]"
-              : "size-[12px]";
+              ? "size-[15px]"
+              : "size-[13px]";
 
         const groupTitle = (
           <span
@@ -62,7 +62,7 @@ export const ConfigPanel = ({
           >
             <Icon
               className={iconClasses}
-              strokeWidth={2.4}
+              strokeWidth={device === "desktop" ? 2.1 : 2.3}
               fill="hsla(0,0%,0%,0.05)"
             />
             {group.label}
