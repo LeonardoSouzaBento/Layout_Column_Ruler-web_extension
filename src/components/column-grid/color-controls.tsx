@@ -1,4 +1,3 @@
-
 const COLORS = [
   { name: "blue", value: "220 70% 55%" },
   { name: "red", value: "0 72% 55%" },
@@ -10,14 +9,19 @@ const COLORS = [
   { name: "gray", value: "220 10% 50%" },
 ];
 
-interface GridStyleControlsProps {
+interface ColorControlsProps {
   color: string;
   opacity: number;
   onColorChange: (color: string) => void;
   onOpacityChange: (opacity: number) => void;
 }
 
-const GridStyleControls = ({ color, opacity, onColorChange, onOpacityChange }: GridStyleControlsProps) => (
+export const ColorControls = ({
+  color,
+  opacity,
+  onColorChange,
+  onOpacityChange,
+}: ColorControlsProps) => (
   <div className="flex flex-col gap-2.5 pt-2 pb-4">
     <div className="flex flex-col gap-3 px-4">
       <div className="flex flex-wrap justify-between py-2">
@@ -28,7 +32,8 @@ const GridStyleControls = ({ color, opacity, onColorChange, onOpacityChange }: G
             className="h-5 w-5 rounded-full ring-1 ring-muted-foreground/20 transition-transform hover:scale-110"
             style={{
               background: `hsl(${c.value})`,
-              outline: color === c.value ? "2px solid var(--color-selected)" : "none",
+              outline:
+                color === c.value ? "2px solid var(--color-selected)" : "none",
               outlineOffset: "2px",
             }}
           />
@@ -54,5 +59,3 @@ const GridStyleControls = ({ color, opacity, onColorChange, onOpacityChange }: G
     </div>
   </div>
 );
-
-export default GridStyleControls;

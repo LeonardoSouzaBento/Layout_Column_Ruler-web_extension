@@ -1,4 +1,4 @@
-import LayoutGrid from "@/components/LayoutGrid";
+import LayoutGrid from "@/components/column-grid";
 
 const Index = () => (
   <div className="min-h-screen bg-background">

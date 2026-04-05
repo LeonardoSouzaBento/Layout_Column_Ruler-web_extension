@@ -1,12 +1,12 @@
 import type { GridLayout } from "@/data/gridLayouts";
 
-interface GridOverlayProps {
+interface ColumnsProps {
   layout: GridLayout;
   color: string;
   opacity: number;
 }
 
-const GridOverlay = ({ layout, color, opacity }: GridOverlayProps) => {
+export const Columns = ({ layout, color, opacity }: ColumnsProps) => {
   const { columns, gutter, margin, width, type } = layout;
 
   const containerStyle: React.CSSProperties =
@@ -25,7 +25,10 @@ const GridOverlay = ({ layout, color, opacity }: GridOverlayProps) => {
         };
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-10 h-full w-full" style={containerStyle}>
+    <div
+      className="pointer-events-none fixed inset-0 z-10 h-full w-full"
+      style={containerStyle}
+    >
       {Array.from({ length: columns }, (_, i) => (
         <div
           key={i}
@@ -36,5 +39,3 @@ const GridOverlay = ({ layout, color, opacity }: GridOverlayProps) => {
     </div>
   );
 };
-
-export default GridOverlay;

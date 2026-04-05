@@ -1,12 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import type { GridLayout } from "@/data/gridLayouts";
 import { gridLayouts } from "@/data/gridLayouts";
-import GridConfigPanel from "./GridConfigPanel";
-import GridStyleControls from "./GridStyleControls";
-import GridOverlay from "./GridOverlay";
+import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import {
+  ColorControls,
+  Columns,
+  ConfigPanel,
+  DragButton,
+} from "./column-grid/index";
 
 function getInitialDevice(): string {
   const w = window.innerWidth;
@@ -36,6 +39,7 @@ const LayoutGrid = () => {
   const [columnColor, setColumnColor] = useState(DEFAULT_COLOR);
   const [columnOpacity, setColumnOpacity] = useState(DEFAULT_OPACITY);
   const containerRef = useRef<HTMLDivElement>(null);
+  const positionRef = useRef({ bottom: 16, right: 16 });
 
   useEffect(() => {
     setActiveLayout(getInitialLayout());
@@ -63,13 +67,20 @@ const LayoutGrid = () => {
 
   return (
     <>
-      <GridOverlay
+      <Columns
         layout={activeLayout}
         color={columnColor}
         opacity={columnOpacity}
       />
 
-      <div ref={containerRef} className="fixed bottom-4 right-4 z-50">
+      <div
+        ref={containerRef}
+        className="fixed z-50"
+        style={{
+          bottom: `${positionRef.current.bottom}px`,
+          right: `${positionRef.current.right}px`,
+        }}
+      >
         <div
           className="rounded-xl shadow-sm ring-1 ring-glass-border"
           style={{
@@ -88,12 +99,12 @@ const LayoutGrid = () => {
           >
             <div className="overflow-hidden">
               <div className="border-b">
-                <GridConfigPanel
+                <ConfigPanel
                   selectedDevice={selectedDevice}
                   selectedAlias={activeLayout.alias}
                   onSelect={handleSelect}
                 />
-                <GridStyleControls
+                <ColorControls
                   color={columnColor}
                   opacity={columnOpacity}
                   onColorChange={setColumnColor}
@@ -104,20 +115,31 @@ const LayoutGrid = () => {
           </div>
 
           <Button
+            asChild
             variant="ghost"
             onClick={() => setOpen((v) => !v)}
-            className="w-full justify-between gap-2 px-4 py-2.5 text-sm 
+            className="w-full justify-between gap-2 pl-4 pr-2 py-2.5 text-sm 
             font-medium text-foreground hover:bg-accent/50"
           >
-            Configurar grid
-            <ChevronDown
-              size={24}
-              strokeWidth={2}
-              className={cn(
-                "transition-transform duration-200",
-                open && "rotate-180",
-              )}
-            />
+            <div>
+              <span className="w-full flex items-center gap-3">
+                <ChevronDown
+                  size={24}
+                  strokeWidth={2}
+                  className={cn(
+                    "transition-transform duration-200",
+                    open && "rotate-180",
+                  )}
+                />
+                Configurar grid
+              </span>
+              <div className="shrink-0 p-1">
+                <DragButton
+                  containerRef={containerRef}
+                  positionRef={positionRef}
+                />
+              </div>
+            </div>
           </Button>
         </div>
       </div>
