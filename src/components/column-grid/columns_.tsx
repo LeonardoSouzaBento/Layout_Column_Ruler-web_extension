@@ -26,7 +26,7 @@ export const Columns = ({ layout, color, opacity }: ColumnsProps) => {
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-250 h-full w-full"
+      className="pointer-events-none fixed inset-0 z-8000 h-full w-full"
       style={containerStyle}
     >
       {Array.from({ length: columns }, (_, i) => (

@@ -16,6 +16,8 @@ export default defineContentScript({
         const wrapper = document.createElement("div");
         wrapper.style.display = "none";
         wrapper.style.colorScheme = "light"; // Force light mode
+        wrapper.style.zIndex = "999999";
+        wrapper.style.fontSize = "16px";
         wrapper.className = "light"; // Useful if Tailwind is configured for classes
         container.append(wrapper);
 

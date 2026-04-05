@@ -9,6 +9,9 @@ const chromePath =
 export default defineConfig({
   modules: ["@wxt-dev/module-react"],
   srcDir: "src",
+  manifest: {
+    action: {},
+  },
   webExt: {
     binaries: {
       chrome: chromePath,

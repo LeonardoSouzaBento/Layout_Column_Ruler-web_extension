@@ -6,6 +6,15 @@ All colors MUST be HSL.
 */
 
 @theme {
+  /* Redefine core units to be absolute px instead of rem */
+  --spacing: 4px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+
   --color-background: hsl(0 0% 96%);
   --color-foreground: hsl(220 15% 20%);
 
@@ -39,10 +48,10 @@ All colors MUST be HSL.
   --color-input: hsl(220 13% 87%);
   --color-ring: hsl(220 70% 50%);
 
-  --radius: 0.5rem;
+  --radius: 8px;
   --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: 6px;
+  --radius-sm: 4px;
 
   --color-glass-bg: hsl(0 0% 100% / 0.92);
   --color-glass-border: hsl(220 13% 87% / 0.6);
@@ -81,7 +90,7 @@ All colors MUST be HSL.
 
 @utility container {
   margin-inline: auto;
-  paddin-inline: 2rem;
+  padding-inline: 2rem;
   @media (width >= 1400px) {
     max-width: 1400px;
   }
