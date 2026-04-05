@@ -14,11 +14,11 @@ const GridInfo = ({
   label: string;
   value: string | number;
 }) => (
-  <div className="flex items-center gap-4">
+  <div className="flex items-center justify-between gap-4 tracking-wider">
     <span className="text-xs font-semibold text-muted-foreground uppercase tracking-tight">
       {label}
     </span>
-    <span className="text-xs font-bold text-primary font-mono bg-primary/10 px-1 rounded-sm">
+    <span className="text-xs font-bold text-primary font-mono px-1 rounded-sm">
       {value}
     </span>
   </div>
@@ -41,28 +41,29 @@ export const GridInfoTooltip = ({
         <TooltipTrigger asChild>
           <Button
             variant="secondary"
-            size="iconSm"
+            size="iconXs"
             onClick={() => {
               console.log("click");
             }}
-            className="absolute bottom-36 right-3 rounded-full text-base font-medium text-primary  [&_svg]:size-5.5"
+            className="absolute bottom-34 right-3 rounded-full text-base 
+            font-medium text-primary [&_svg]:size-6"
           >
-            <CircleQuestionMark strokeWidth={1.8} />
+            <CircleQuestionMark strokeWidth={1.75} />
           </Button>
         </TooltipTrigger>
         <TooltipContent
           side="top"
-          className="flex flex-col gap-1.5 border bg-background/95 
-            2.5 pt-2 pb-2.5 shadow-lg min-w-max animate-in zoom-in-95 duration-200"
+          className="flex flex-col gap-1.5 border bg-background/95 rounded-md
+            px-2.5 pt-2 pb-3 shadow-lg min-w-max animate-in zoom-in-95 duration-200"
         >
           <p
             className="min-w-max text-muted-foreground/90 text-xs 
-            font-medium pb-1.5 border-b mb-1"
+            font-medium pb-1.5 border-b mb-1 tracking-wide"
           >
             <span className="uppercase">{selectedDevice}</span> –{" "}
             <span className="capitalize">{selectedAlias}</span>
           </p>
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-3">
             {configs.map((config) => {
               return (
                 <GridInfo

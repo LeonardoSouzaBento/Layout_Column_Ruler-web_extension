@@ -22,19 +22,19 @@ export const ConfigPanel = ({
   const breakpoint = `${selectedGroup?.maxWidth ? "<=" : ">="} ${selectedGroup?.maxWidth || 1024}px`;
 
   const configs = [
-    { label: "Breakpoint", value: breakpoint },
     {
-      label: "Columns",
-      value: selectedLayout?.columns || "-",
+      label: "Gap",
+      value: selectedLayout?.gutter || "-",
     },
     {
       label: "Margin",
       value: selectedLayout?.margin || "0",
     },
     {
-      label: "Gap",
-      value: selectedLayout?.gutter || "-",
+      label: "Columns",
+      value: selectedLayout?.columns || "-",
     },
+    { label: "Screen", value: breakpoint },
   ];
 
   if (selectedLayout?.width && !selectedLayout?.margin) {
