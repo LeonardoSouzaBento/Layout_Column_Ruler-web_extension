@@ -4,17 +4,17 @@
 
 ## Baixar a extensão
 
-### Prerequisites
+### Pré-requisitos
 
-- Node.js (v18 or higher)
-- npm (or yarn/pnpm)
+- Node.js (v18 ou superior)
+- npm (ou yarn/pnpm)
 
-### Development
+### No terminal do seu computador:
 
 1. Clone o repositório e navegue até a pasta do projeto:
    ```bash
-   git clone <repository-url>
-   cd layout-column-ruler-web-extension
+   git clone https://github.com/LeonardoSouzaBento/Layout_Column_Ruler-web_extension
+   cd Layout_Column_Ruler-web_extension
    ```
 
 2. Instale as dependências:
