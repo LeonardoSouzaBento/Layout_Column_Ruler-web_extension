@@ -53,7 +53,7 @@ export const GridInfoTooltip = ({
         </TooltipTrigger>
         <TooltipContent
           side="top"
-          className="flex flex-col gap-1.5 border bg-background/95 rounded-md
+          className="flex flex-col gap-1.5 border bg-background/95 rounded-md z-1000
             px-2.5 pt-2 pb-3 shadow-lg min-w-max animate-in zoom-in-95 duration-200"
         >
           <p
