@@ -26,6 +26,8 @@ export interface GridLayouts {
   [key: string]: DeviceGroup;
 }
 
+export type Device = "mobile" | "tablet" | "desktop";
+
 /*prettier-ignore*/
 export const gridLayouts: GridLayouts = {
   desktop: {

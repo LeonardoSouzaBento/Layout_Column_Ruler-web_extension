@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# WXT + React
 
-TODO: Document your project here
+This template should help get you started developing with React in WXT.

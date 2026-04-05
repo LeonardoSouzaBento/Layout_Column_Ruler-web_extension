@@ -1,25 +1,27 @@
-import type { GridLayout } from "@/data/gridLayouts";
+import type { Device, GridLayout } from "@/data/gridLayouts";
 import { gridLayouts } from "@/data/gridLayouts";
 import { GridInfoTooltip } from "./config-panel/grid-info";
 import { Button } from "../ui/button";
 
 interface ConfigPanelProps {
-  selectedDevice: string;
+  selectedDevice: Device;
   selectedAlias: string;
-  onSelect: (device: string, layout: GridLayout) => void;
+  onSelect: (device: Device, layout: GridLayout) => void;
+  setLastGrid: React.Dispatch<React.SetStateAction<Record<Device, string>>>;
 }
 
 export const ConfigPanel = ({
   selectedDevice,
   selectedAlias,
   onSelect,
+  setLastGrid,
 }: ConfigPanelProps) => {
-  const selectedGroup = gridLayouts[selectedDevice as keyof typeof gridLayouts];
-  const selectedLayout = selectedGroup?.layouts.find(
+  const selectedGroup = gridLayouts[selectedDevice];
+  const selectedLayout = selectedGroup.layouts.find(
     (l) => l.alias === selectedAlias,
   );
 
-  const breakpoint = `${selectedGroup?.maxWidth ? "<=" : ">="} ${selectedGroup?.maxWidth || 1024}px`;
+  const breakpoint = `${selectedGroup.maxWidth ? "<=" : ">="} ${selectedGroup.maxWidth || 1024}px`;
 
   const configs = [
     {
@@ -78,16 +80,29 @@ export const ConfigPanel = ({
                 const selectedBtn =
                   selectedDevice === device && selectedAlias === layout.alias;
                 return (
-                  <Button
+                  <div
                     key={layout.alias}
-                    selected={selectedBtn}
-                    onClick={() => onSelect(device, layout)}
-                    variant="ghost"
-                    size="sm"
-                    className="rounded-full px-3 py-1.5 text-sm justify-start max-w-max"
+                    className="w-full bg-transparent backdrop-blur-none cursor-pointer"
+                    onClick={() => {
+                      onSelect(
+                        device as "mobile" | "tablet" | "desktop",
+                        layout,
+                      );
+                      setLastGrid((prev) => ({
+                        ...prev,
+                        [device]: layout.alias,
+                      }));
+                    }}
                   >
-                    {layout.alias}
-                  </Button>
+                    <Button
+                      selected={selectedBtn}
+                      variant="ghost"
+                      size="sm"
+                      className="rounded-full px-3 py-1.5 text-sm justify-start max-w-max relative z-2"
+                    >
+                      {layout.alias}
+                    </Button>
+                  </div>
                 );
               })}
             </div>

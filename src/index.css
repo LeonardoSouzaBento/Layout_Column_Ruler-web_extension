@@ -81,7 +81,7 @@ All colors MUST be HSL.
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 2rem;
+  paddin-inline: 2rem;
   @media (width >= 1400px) {
     max-width: 1400px;
   }
@@ -124,13 +124,8 @@ All colors MUST be HSL.
     display: none;
   }
 
-  .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-  }
-  
   .scrollbar-hidden {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
 }
-

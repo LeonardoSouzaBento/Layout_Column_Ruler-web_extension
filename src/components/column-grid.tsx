@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
-import type { GridLayout } from "@/data/gridLayouts";
+import type { Device, GridLayout } from "@/data/gridLayouts";
 import { gridLayouts } from "@/data/gridLayouts";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useMatchMedias } from "@/hooks/useMatchMedias";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -11,17 +13,14 @@ import {
   DragButton,
 } from "./column-grid/index";
 
-function getInitialDevice(): string {
-  const w = window.innerWidth;
-  if (w <= 768) return "mobile";
-  if (w <= 1024) return "tablet";
-  return "desktop";
-}
-
-function getInitialLayout(): GridLayout {
-  const device = getInitialDevice();
+function getInitialLayout(
+  device: Device,
+  lastGrid?: Record<string, string>,
+): GridLayout {
   const group = gridLayouts[device];
-  const defaultAlias = device === "desktop" ? "balanced" : "default";
+  const lastAlias = lastGrid?.[device];
+  const defaultAlias =
+    lastAlias || (device === "desktop" ? "balanced" : "default");
   return (
     group.layouts.find((l) => l.alias === defaultAlias) ?? group.layouts[0]
   );
@@ -32,26 +31,37 @@ const DEFAULT_OPACITY = 0.25;
 
 const LayoutGrid = () => {
   const [open, setOpen] = useState(false);
-  const [activeLayout, setActiveLayout] =
-    useState<GridLayout>(getInitialLayout);
-  const [selectedDevice, setSelectedDevice] =
-    useState<string>(getInitialDevice);
+  const device = useMatchMedias();
+
+  const [lastGrid, setLastGrid] = useLocalStorage("lastGrid", {
+    mobile: "default",
+    tablet: "default",
+    desktop: "balanced",
+  });
+
+  const [selection, setSelection] = useState(() => ({
+    device,
+    layout: getInitialLayout(device, lastGrid),
+  }));
+
   const [columnColor, setColumnColor] = useState(DEFAULT_COLOR);
   const [columnOpacity, setColumnOpacity] = useState(DEFAULT_OPACITY);
   const containerRef = useRef<HTMLDivElement>(null);
   const positionRef = useRef({ bottom: 16, right: 16 });
 
   useEffect(() => {
-    setActiveLayout(getInitialLayout());
-    setSelectedDevice(getInitialDevice());
-  }, []);
+    setSelection({
+      device,
+      layout: getInitialLayout(device, lastGrid),
+    });
+  }, [device]);
 
   useEffect(() => {
     if (!open) return;
     const handleClickOutside = (e: MouseEvent) => {
       if (
         containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
+        !e.composedPath().includes(containerRef.current)
       ) {
         setOpen(false);
       }
@@ -60,28 +70,30 @@ const LayoutGrid = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  const handleSelect = (device: string, layout: GridLayout) => {
-    setSelectedDevice(device);
-    setActiveLayout(layout);
+  const handleSelect = (device: Device, layout: GridLayout) => {
+    setSelection({ device, layout });
   };
 
   return (
     <>
       <Columns
-        layout={activeLayout}
+        layout={selection.layout}
         color={columnColor}
         opacity={columnOpacity}
       />
 
       <div
         ref={containerRef}
-        className="fixed z-50"
+        className="fixed z-500"
         style={{
           bottom: `${positionRef.current.bottom}px`,
           right: `${positionRef.current.right}px`,
         }}
       >
         <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
           className="rounded-xl shadow-sm ring-1 ring-glass-border"
           style={{
             background: "var(--color-glass-bg)",
@@ -97,12 +109,18 @@ const LayoutGrid = () => {
                 : "grid-rows-[0fr] opacity-0",
             )}
           >
-            <div className="overflow-hidden">
+            <div
+              className="overflow-hidden"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
               <div className="border-b">
                 <ConfigPanel
-                  selectedDevice={selectedDevice}
-                  selectedAlias={activeLayout.alias}
+                  selectedDevice={selection.device}
+                  selectedAlias={selection.layout.alias}
                   onSelect={handleSelect}
+                  setLastGrid={setLastGrid}
                 />
                 <ColorControls
                   color={columnColor}
@@ -135,7 +153,7 @@ const LayoutGrid = () => {
               </span>
               <div className="shrink-0 p-1">
                 <DragButton
-                  containerRef={containerRef}
+                  containerRef={containerRef as React.RefObject<HTMLDivElement>}
                   positionRef={positionRef}
                 />
               </div>

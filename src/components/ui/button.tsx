@@ -54,7 +54,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const isIcon = size === "icon" || (size === "iconSm" && "shrink-0");
 
     const selectedStyle = selected
-      ? "not-only-of-type:bg-selected text-selected-foreground shadow-sm hover:bg-selected/90 hover:text-selected-foreground"
+      ? "bg-selected text-selected-foreground shadow-sm hover:bg-selected/90 hover:text-selected-foreground"
       : "text-muted-foreground hover:bg-accent";
 
     return (

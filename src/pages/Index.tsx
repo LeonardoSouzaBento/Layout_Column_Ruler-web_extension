@@ -1,7 +1,7 @@
 import LayoutGrid from "@/components/column-grid";
 
 const Index = () => (
-  <div className="min-h-screen bg-background">
+  <div className="bg-transparent">
     <LayoutGrid />
   </div>
 );
