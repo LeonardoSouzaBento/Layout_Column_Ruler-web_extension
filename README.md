@@ -31,7 +31,7 @@
    npm run build
    ```
 
-### Instalação da extensão no navegador
+## Instalação da extensão no navegador
 
 1 - Abra o seu navegador (Brave, Chrome ou Edge).
 
