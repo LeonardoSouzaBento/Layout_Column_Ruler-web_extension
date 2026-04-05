@@ -45,7 +45,7 @@ export const GridInfoTooltip = ({
             onClick={() => {
               console.log("click");
             }}
-            className="absolute bottom-34 right-3 rounded-full text-base 
+            className="absolute bottom-2 right-3 rounded-full text-base 
             font-medium text-primary [&_svg]:size-6"
           >
             <CircleQuestionMark strokeWidth={1.75} />

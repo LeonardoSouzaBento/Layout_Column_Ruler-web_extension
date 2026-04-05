@@ -45,7 +45,7 @@ export const ConfigPanel = ({
   }
 
   return (
-    <div className="flex pt-2 px-1.5 gap-1 pb-2 border-b border-border/50">
+    <div className="flex pt-2 px-1.5 gap-1 pb-2 border-b border-border/50 relative">
       {Object.entries(gridLayouts).map(([device, group]) => {
         const Icon = group.icon;
         const iconClasses =
