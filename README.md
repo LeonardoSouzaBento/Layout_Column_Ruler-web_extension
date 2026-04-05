@@ -1,7 +1,7 @@
 # Layout Column Ruler Web Extension
 
 <div style="display: flex;">
-  <img src="./public/exemplo.png" width="500" height="100%" />
+  <img src="./public/example.png" width="500" height="100%" />
 </div>
 
 ## Baixar a extensão
